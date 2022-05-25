@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>ToDO</title>
+</head>
+<body>
+
+    <nav>
+        <h1><a href="#">ToDo</a></h1>
+    </nav>
+    <hr>
+
+        
+    <form action="{% url 'core:task_create' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="task" id="task">
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
+
+
+    {%for task in list_tasks%}
+    <div class="task">
+        <p>
+            <form action="{% url 'core:task_delete' task.id %}" method="post">
+                {% csrf_token %}
+                
+                <input type="checkbox" >
+                {{task.description}}
+                <button type="submit">Apagar</button>
+            </form>
+            </p>
+    </div>
+    {%endfor%}
+
+
+</body>
+</html>
